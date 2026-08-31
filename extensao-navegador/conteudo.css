@@ -1,0 +1,16 @@
+/*
+ * Unico estilo aplicado na pagina em si. Todo o resto do pincel mora dentro de
+ * um shadow DOM, isolado do CSS do site.
+ *
+ * O !important e proposital: alguns sites tem regras agressivas em "div".
+ */
+#marca-texto-pincel {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  pointer-events: auto !important;
+}

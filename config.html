@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>Marca Texto - Configuracoes</title>
+  <link rel="stylesheet" href="estilo.css" />
+</head>
+<body>
+  <h1>Marca Texto</h1>
+  <p class="subtitulo">O app fica na bandeja do Windows, ao lado do relogio. As mudancas valem na hora.</p>
+
+  <section>
+    <h2>Tecla de atalho</h2>
+    <div class="linha">
+      <label>Ligar/desligar</label>
+      <button id="gravarTecla">F8</button>
+      <button id="restaurarTecla">Padrao (F8)</button>
+    </div>
+    <div class="aviso" id="avisoTecla"></div>
+  </section>
+
+  <section>
+    <h2>Previa</h2>
+    <canvas id="previa" width="820" height="184"></canvas>
+  </section>
+
+  <section>
+    <h2>Marca-texto <span style="text-transform:none;letter-spacing:0">(tecla M)</span></h2>
+    <div class="linha">
+      <label>Cor</label>
+      <div class="paleta" id="paletaMarcaTexto"></div>
+      <input type="color" id="corMarcaTexto" />
+    </div>
+    <div class="linha">
+      <label>Espessura</label>
+      <input type="range" id="espMarcaTexto" min="2" max="140" step="1" />
+      <span class="valor" id="vEspMarcaTexto"></span>
+    </div>
+    <div class="linha">
+      <label>Opacidade</label>
+      <input type="range" id="opMarcaTexto" min="5" max="100" step="1" />
+      <span class="valor" id="vOpMarcaTexto"></span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Caneta <span style="text-transform:none;letter-spacing:0">(tecla C)</span></h2>
+    <div class="linha">
+      <label>Cor</label>
+      <div class="paleta" id="paletaCaneta"></div>
+      <input type="color" id="corCaneta" />
+    </div>
+    <div class="linha">
+      <label>Espessura</label>
+      <input type="range" id="espCaneta" min="2" max="140" step="1" />
+      <span class="valor" id="vEspCaneta"></span>
+    </div>
+    <div class="linha">
+      <label>Opacidade</label>
+      <input type="range" id="opCaneta" min="5" max="100" step="1" />
+      <span class="valor" id="vOpCaneta"></span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Comportamento</h2>
+    <div class="linha">
+      <label>Sumico</label>
+      <input type="range" id="fade" min="0" max="2000" step="50" />
+      <span class="valor" id="vFade"></span>
+    </div>
+    <div class="linha">
+      <label>Ao ligar</label>
+      <label class="marcavel"><input type="radio" name="ferramenta" value="marcaTexto" /> Marca-texto</label>
+      <label class="marcavel"><input type="radio" name="ferramenta" value="caneta" /> Caneta</label>
+    </div>
+    <div class="linha">
+      <label>Monitores</label>
+      <label class="marcavel"><input type="checkbox" id="todosMonitores" /> Usar em todos os monitores</label>
+    </div>
+    <div class="linha">
+      <label>Windows</label>
+      <label class="marcavel"><input type="checkbox" id="iniciarComWindows" /> Iniciar junto com o Windows</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Enquanto o pincel esta ligado</h2>
+    <div class="ajuda">
+      <kbd>Arrastar</kbd> o botao esquerdo marca &middot; ao soltar, a marca some sozinha<br />
+      <kbd>M</kbd> marca-texto &middot; <kbd>C</kbd> caneta<br />
+      <kbd>1</kbd> a <kbd>5</kbd> trocam a cor &middot; <kbd>roda do mouse</kbd> muda a espessura<br />
+      <kbd>Esc</kbd> ou <kbd>botao direito</kbd> desligam o pincel
+    </div>
+  </section>
+
+  <div class="rodape">
+    <button id="restaurar">Restaurar tudo</button>
+    <button id="fechar">Fechar</button>
+  </div>
+
+  <script src="config.js"></script>
+</body>
+</html>

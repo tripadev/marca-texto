@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>Marca Texto</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: none;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    /* Aviso curto (ferramenta / espessura) que aparece so quando voce muda algo */
+    #dica {
+      position: fixed;
+      left: 50%;
+      bottom: 46px;
+      transform: translateX(-50%);
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(16, 17, 21, 0.82);
+      color: #f2f3f5;
+      font: 600 14px/1 "Segoe UI", system-ui, sans-serif;
+      letter-spacing: 0.2px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      transition: opacity 220ms ease;
+      pointer-events: none;
+    }
+    #dica.aparecer { opacity: 1; }
+    #dica .bolinha {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: -1px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="tela"></canvas>
+  <div id="dica"></div>
+  <script src="overlay.js"></script>
+</body>
+</html>

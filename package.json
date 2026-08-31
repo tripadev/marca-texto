@@ -1,0 +1,52 @@
+{
+  "name": "marca-texto",
+  "version": "1.0.0",
+  "description": "Pincel de anotacao temporaria sobre a tela: aperte a tecla, marque com o mouse, a marcacao some sozinha ao soltar o clique.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "icone": "node ferramentas/criar-icone.js",
+    "empacotar": "electron-builder --win portable"
+  },
+  "author": "Samuel",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.samuel.marcatexto",
+    "productName": "Marca Texto",
+    "copyright": "Marca Texto",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "overlay.html",
+      "overlay.js",
+      "config.html",
+      "config.js",
+      "estilo.css",
+      "assets/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "portable": {
+      "artifactName": "Marca Texto ${version} portatil.exe",
+      "unpackDirName": "marca-texto-portatil",
+      "splashImage": null
+    }
+  }
+}
