@@ -4,7 +4,30 @@ Pincel de anotação temporária por cima da tela, para usar durante gravações
 
 Você aperta uma tecla, risca com o mouse o que quer destacar, e **quando solta o botão a marcação some sozinha**.
 
-## Como abrir
+## Instalar em qualquer máquina (um comando)
+
+Abra o **PowerShell** e cole:
+
+```bash
+irm https://raw.githubusercontent.com/tripadev/marca-texto/main/instalar.ps1 | iex
+```
+
+Ele baixa a versão mais recente, instala no seu perfil de usuário, cria o atalho no Menu Iniciar
+e o comando `marca-texto` no terminal. **Não precisa de Node, nem de administrador.**
+
+Rodar de novo depois atualiza para a versão mais nova (e não faz nada se já estiver na última).
+
+Para desinstalar:
+
+```bash
+&([scriptblock]::Create((irm https://raw.githubusercontent.com/tripadev/marca-texto/main/instalar.ps1))) -Desinstalar
+```
+
+O instalador mexe em três lugares, todos dentro do seu perfil — `%LOCALAPPDATA%\Programs\MarcaTexto`,
+o atalho do Menu Iniciar e o PATH do usuário — e o `-Desinstalar` desfaz os três. Suas preferências
+em `%APPDATA%\marca-texto` são preservadas.
+
+## Como abrir (rodando do código-fonte)
 
 Dê dois cliques em **`Marca Texto.bat`**.
 
