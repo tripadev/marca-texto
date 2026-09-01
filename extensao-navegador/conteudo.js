@@ -50,6 +50,7 @@
   const sumindo = [];
   let mouse = { x: -1, y: -1, dentro: false };
   let quadroPedido = false;
+  let quadroId = null;
   let dicaTimer = null;
   let larg = 0, alt = 0, dpr = 1;
 
@@ -89,6 +90,13 @@
     tracoAtual = null;
     sumindo.length = 0;
     mouse.dentro = false;
+    // Zerar o pedido de quadro e obrigatorio: se um requestAnimationFrame ficou
+    // pendente (a aba foi escondida antes de ele rodar), a flag travaria em true
+    // e o pincel nunca mais pintaria, mesmo montando de novo.
+    if (quadroId !== null) cancelAnimationFrame(quadroId);
+    quadroId = null;
+    quadroPedido = false;
+    clearTimeout(dicaTimer);
   }
 
   function dimensionar() {
@@ -235,6 +243,7 @@
 
   function quadro() {
     quadroPedido = false;
+    quadroId = null;
     desenhar();
     if (sumindo.length) pedirQuadro();
   }
@@ -242,7 +251,7 @@
   function pedirQuadro() {
     if (quadroPedido || !ctx) return;
     quadroPedido = true;
-    requestAnimationFrame(quadro);
+    quadroId = requestAnimationFrame(quadro);
   }
 
   /* --------------------------------------------------------------- gravar */
@@ -373,8 +382,17 @@
 
   /* ------------------------------------------------------------- controle */
 
+  // Ligado de verdade = a flag esta ligada E o elemento continua na pagina.
+  // Alguns sites (e SPAs que refazem a arvore) removem nos que nao conhecem;
+  // sem esta checagem o pincel ficaria "ligado" sem nada na tela, e o proximo
+  // acionamento so desligaria uma coisa que ja nao existe.
+  function ligadoDeVerdade() {
+    return ativo && hospedeiro !== null && hospedeiro.isConnected;
+  }
+
   function ligar() {
-    if (ativo) return true;
+    if (ligadoDeVerdade()) return true;
+    if (ativo) desmontar(); // estado sujo: refaz do zero
     ativo = true;
     montar();
     pedirQuadro();
@@ -382,14 +400,13 @@
   }
 
   function desligar() {
-    if (!ativo) return false;
     ativo = false;
     desmontar(); // desligado = nada na pagina
     return false;
   }
 
   function alternar() {
-    return ativo ? desligar() : ligar();
+    return ligadoDeVerdade() ? desligar() : ligar();
   }
 
   function aplicarCfg(nova) {
@@ -406,15 +423,19 @@
     desligar: desligar,
     alternar: alternar,
     aplicarCfg: aplicarCfg,
-    estaAtivo: function () { return ativo; }
+    estaAtivo: ligadoDeVerdade
   };
 
   if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage) {
     chrome.runtime.onMessage.addListener(function (msg, remetente, responder) {
-      if (!msg || msg.tipo !== 'alternar') return;
+      if (!msg) return;
+      if (msg.tipo === 'ping') { // o fundo.js checa se ainda ha alguem vivo aqui
+        responder({ vivo: true, ativo: ligadoDeVerdade() });
+        return;
+      }
+      if (msg.tipo !== 'alternar') return;
       aplicarCfg(msg.cfg);
       responder({ ativo: alternar() });
-      return true;
     });
   }
 

@@ -48,16 +48,32 @@ async function alternarNaAba(aba) {
   }
 
   try {
-    // Injeta o pincel (o proprio arquivo se protege contra injecao repetida).
-    await chrome.scripting.insertCSS({ target: { tabId: aba.id }, files: ['conteudo.css'] });
-    await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['conteudo.js'] });
-
     const cfg = await lerConfig();
+
+    // Fala primeiro; so injeta se nao houver ninguem vivo do outro lado.
+    // Reinjetar as cegas nao adianta: o conteudo.js se protege contra injecao
+    // repetida, entao um script em estado ruim continuaria no lugar.
+    let vivo = false;
+    try {
+      const ping = await chrome.tabs.sendMessage(aba.id, { tipo: 'ping' });
+      vivo = !!(ping && ping.vivo);
+    } catch (e) {
+      vivo = false; // ninguem escutando: pagina nova, recarregada ou script morto
+    }
+
+    if (!vivo) {
+      await chrome.scripting.insertCSS({ target: { tabId: aba.id }, files: ['conteudo.css'] });
+      await chrome.scripting.executeScript({ target: { tabId: aba.id }, files: ['conteudo.js'] });
+    }
+
     const resposta = await chrome.tabs.sendMessage(aba.id, { tipo: 'alternar', cfg: cfg });
     const ligado = resposta && resposta.ativo;
     chrome.action.setBadgeBackgroundColor({ color: '#8a7400' });
     chrome.action.setBadgeText({ tabId: aba.id, text: ligado ? 'on' : '' });
   } catch (e) {
+    // Fica registrado no console do service worker (chrome://extensions >
+    // "service worker"), para dar para descobrir a causa quando falhar.
+    console.error('[Marca Texto] falhou em', url, '->', e && e.message ? e.message : e);
     aviso(aba.id, 'nao consegui abrir o pincel aqui. Recarregue a pagina e tente de novo.');
   }
 }
