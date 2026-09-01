@@ -5,17 +5,30 @@ que quer destacar, e **ao soltar o botão do mouse a marcação some sozinha**.
 
 Funciona no **Chrome** e no **Edge**.
 
+## Baixar
+
+**[Baixar a extensão (zip)](https://github.com/tripadev/marca-texto/releases/latest)** — na página de
+Releases, pegue o arquivo `marca-texto-extensao-*.zip`.
+
+Descompacte numa pasta que possa ficar guardada: o Chrome lê essa pasta toda vez que abre, então
+ela não pode ser apagada depois.
+
 ## Como instalar
 
 Como a extensão não veio da loja, ela é instalada em modo desenvolvedor. É definitivo, não expira:
 
 1. Abra `chrome://extensions` (no Edge: `edge://extensions`).
 2. Ligue o **Modo do desenvolvedor**, no canto da página.
-3. Clique em **Carregar sem compactação** e escolha a pasta `extensao-navegador`
-   (a que contém o `manifest.json`).
+3. Clique em **Carregar sem compactação** e escolha a pasta que voce descompactou
+   (a que contém o `manifest.json` dentro).
 4. Pronto. O ícone amarelo aparece na barra do navegador — clique no alfinete para deixá-lo fixo.
 
 Não precisa recarregar as abas que já estavam abertas.
+
+## Como atualizar
+
+Baixe o zip novo, substitua os arquivos da pasta e clique no botao de **recarregar** no cartao da
+extensao, em `chrome://extensions`. Nao precisa remover e instalar de novo.
 
 ## Como usar
 

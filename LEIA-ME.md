@@ -103,7 +103,9 @@ npm run empacotar
 
 ## Extensão para o navegador
 
-Existe também uma versão que roda dentro do Chrome/Edge, na pasta `extensao-navegador`.
+Existe também uma versão que roda dentro do Chrome/Edge. Baixe o zip em
+[Releases](https://github.com/tripadev/marca-texto/releases/latest) (arquivo `marca-texto-extensao-*.zip`)
+ou use a pasta `extensao-navegador` deste repositório.
 Ela usa **Alt+C** (o F8 fica com o aplicativo, que captura a tecla no Windows inteiro).
 As instruções de instalação estão em [extensao-navegador/LEIA-ME.md](extensao-navegador/LEIA-ME.md).
 
